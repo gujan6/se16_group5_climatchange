@@ -1,0 +1,45 @@
+package climatechange.server;
+
+import climatechange.client.GreetingService;
+import climatechange.shared.FieldVerifier;
+import com.google.gwt.user.server.rpc.RemoteServiceServlet;
+
+/**
+ * The server-side implementation of the RPC service.
+ */
+@SuppressWarnings("serial")
+public class GreetingServiceImpl extends RemoteServiceServlet implements GreetingService {
+
+	public String greetServer(String input) throws IllegalArgumentException {
+		// Verify that the input is valid. 
+		if (!FieldVerifier.isValidName(input)) {
+			// If the input is not valid, throw an IllegalArgumentException back to
+			// the client.
+			throw new IllegalArgumentException("Name must be at least 4 characters long");
+		}
+
+		String serverInfo = getServletContext().getServerInfo();
+		String userAgent = getThreadLocalRequest().getHeader("User-Agent");
+
+		// Escape data from the client to avoid cross-site script vulnerabilities.
+		input = escapeHtml(input);
+		userAgent = escapeHtml(userAgent);
+
+		return "Hey " + input + "!<br><br>Let me introduce myself: I am GWT. I have been around for a while, and sadly, my time has come. So I thank you that you stay with me in my dying hours. It's not easy being me, no one loves me. Everyone just thinks something else is cool and leaves. So thank you for still developing with me.<br> But enough about me: Let me tell you: You are so awesome! You are studying, having a social life, doing sports... this is great. I dont know if I could do that. People really appreciate you, even if you do not recognize that. You truly have a potential in you to change the lifes of those around you for the better.<br> So this is it. Lets work on this Software Engineering Project and have fun.<br><br> By the way: Is it hot in here, or is it you?<br><br>Greetings: Your friend<br><br> " + serverInfo + ".<br><br>And it looks like you are using:<br>"
+				+ userAgent;
+	}
+
+	/**
+	 * Escape an html string. Escaping data received from the client helps to
+	 * prevent cross-site script vulnerabilities.
+	 * 
+	 * @param html the html string to escape
+	 * @return the escaped string
+	 */
+	private String escapeHtml(String html) {
+		if (html == null) {
+			return null;
+		}
+		return html.replaceAll("&", "&amp;").replaceAll("<", "&lt;").replaceAll(">", "&gt;");
+	}
+}

@@ -25,8 +25,7 @@ public class GreetingServiceImpl extends RemoteServiceServlet implements Greetin
 		input = escapeHtml(input);
 		userAgent = escapeHtml(userAgent);
 
-		return "Hello, " + input + "!<br><br>I am running " + serverInfo + ".<br><br>It looks like you are using:<br>"
-				+ userAgent;
+		return "Greetings to you, " + input + "!<br><br>Please, let me introduce myself: I am GWT. I have been around for a while, and sadly, my time has come. So I thank you that you stay with me in my dying hours. It's not easy being me, no one loves me. Everyone just thinks something else is cool and leaves. So thank you for still developing with me.<br><br> But enough about me: Let me just tell you: You are so awesome! You are studying, having a social life, doing sports... this is great. I dont know if I could do that. People really appreciate you, even if you do not recognize that. You truly have the potential in you to change the lifes of those around you for the better.<br><br> So this is it. Lets work on this Software Engineering Project and have fun.<br><br> By the way: Is it hot in here, or is it you?<br><br>Greetings:<br> Your friend<br><br> " + serverInfo ;
 	}
 
 	/**
